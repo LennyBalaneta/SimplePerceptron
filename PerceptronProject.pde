@@ -20,7 +20,7 @@ void draw() {
   stroke(0);
   
   //The correct fucntion line and the points
-  line(0, 0, width, height);
+  line(0, height, width, 0);
   for(Point pt : points) {
     pt.show();
   }
@@ -42,7 +42,7 @@ void draw() {
       fill(255, 0, 0);
     }
     noStroke();
-    ellipse(pt.x, pt.y, 4, 4);
+    ellipse(pt.pixelX(pt.xx), pt.y, 4, 4);
   }
   
   ptIndex++;
