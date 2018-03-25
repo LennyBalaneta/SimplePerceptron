@@ -5,8 +5,8 @@ Point[] points = new Point[100];
 int ptIndex;
 
 void setup() {
-  size(400, 400);
-  p = new Perceptron();
+  size(800, 800);
+  p = new Perceptron(3);
   
   //Initialize the training points
   for(int i=0 ; i<points.length ; i++) {
@@ -20,21 +20,23 @@ void draw() {
   stroke(0);
   
   //The correct fucntion line and the points
-  line(0, height, width, 0);
+  Point p0 = new Point(-1.0, f(-1.0));
+  Point p1 = new Point(1.0, f(1.0));
+  line(p0.pixelX(), p0.pixelY(), p1.pixelX(), p1.pixelY());
   for(Point pt : points) {
     pt.show();
   }
   
   //Train the Perceptron with 1 point
-  Point pto = points[ptIndex];
-  float[] input = {pto.x, pto.y};
-  p.train(input, pto.label);
+  Point trainingPto = points[ptIndex];
+  float[] input = {trainingPto.x, trainingPto.y, trainingPto.bias};
+  p.train(input, trainingPto.label);
   
   //Print all the points:
   //Green -> correct classification
   //Red   -> incorrect classification
   for(Point pt : points) {
-    float[] inputs = {pt.x, pt.y}; 
+    float[] inputs = {pt.x, pt.y, pt.bias}; 
     int guess = p.guess(inputs);
     if(guess == pt.label) {
       fill(0, 255, 0);
@@ -42,7 +44,7 @@ void draw() {
       fill(255, 0, 0);
     }
     noStroke();
-    ellipse(pt.pixelX(pt.xx), pt.y, 4, 4);
+    ellipse(pt.pixelX(), pt.pixelY(), 4, 4);
   }
   
   ptIndex++;
